@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Security Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --border: #E8E6E0;
+    --border-dark: #D0CEC8;
+    --text: #1A1917;
+    --text-muted: #6B6960;
+    --text-faint: #9B9990;
+    --accent: #1D9E75;
+    --accent-light: #E8F7F2;
+    --accent-dark: #085041;
+    --blue: #2563EB;
+    --blue-light: #EFF6FF;
+    --amber: #D97706;
+    --amber-light: #FFFBEB;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --purple: #7C3AED;
+    --purple-light: #F5F3FF;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* LAYOUT */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: '●'; font-size: 8px; }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .hero h1 span { font-weight: 500; }
+  .hero-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-dark);
+    color: var(--text-muted);
+    background: var(--surface);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* SECTION */
+  section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  .section-header { margin-bottom: 2rem; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+  }
+  .about-card h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .about-card p {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .cert-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .cert-list li {
+    font-size: 13px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cert-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* PROJECTS */
+  .projects-grid { display: flex; flex-direction: column; gap: 1rem; }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .project-card:hover {
+    border-color: var(--border-dark);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .project-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+  }
+  .project-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .project-meta { flex: 1; }
+  .project-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .project-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag-green { background: var(--accent-light); color: var(--accent-dark); }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+  .tag-amber { background: var(--amber-light); color: var(--amber); }
+  .tag-purple { background: var(--purple-light); color: var(--purple); }
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-gray { background: #F4F3F0; color: var(--text-muted); }
+
+  .project-toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+  .project-header:hover .project-toggle { background: var(--border); }
+
+  .project-body {
+    display: none;
+    padding: 0 1.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .project-body.open { display: block; }
+
+  .detail-section { margin-top: 1.25rem; }
+  .detail-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .detail-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .detail-list li {
+    font-size: 13px;
+    color: var(--text);
+    display: flex;
+    gap: 10px;
+    line-height: 1.55;
+  }
+  .detail-list li::before {
+    content: '→';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .code-inline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--text-muted);
+  }
+  .result-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    padding: 6px 12px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+  .result-pill::before { content: '✓'; }
+
+  /* HOMELAB */
+  .homelab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .homelab-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .homelab-item-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .homelab-item-desc {
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .skill-group { }
+  .skill-group-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-item {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* CONTACT */
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .contact-link:hover {
+    border-color: var(--border-dark);
+    background: var(--bg);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-faint);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.75rem; }
+    nav { padding: 0 1rem; }
+    .container { padding: 0 1rem; }
+    section { padding: 2.5rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">IT Security Portfolio</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#homelab">Homelab</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1>Building <span>security</span><br>from the ground up.</h1>
+    <p class="hero-desc">
+      IT Security Engineer in progress. Hands-on experience in IAM, infrastructure monitoring, and security tooling — built through real homelab practice and 14+ years in IT.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">IAM</span>
+      <span class="badge">Nagios</span>
+      <span class="badge">Wazuh</span>
+      <span class="badge">Okta</span>
+      <span class="badge">Entra ID</span>
+      <span class="badge">CompTIA Security+</span>
+      <span class="badge">Linux</span>
+      <span class="badge">Docker</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header">
+      <p class="section-label">Background</p>
+      <h2 class="section-title">About me</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Experience</h3>
+        <p>14+ years in IT spanning web administration, identity & access management in banking, and e-commerce systems. Currently transitioning into IT Security Engineering with a focus on IAM, monitoring tools, and security operations.</p>
+      </div>
+      <div class="about-card">
+        <h3>Focus areas</h3>
+        <p>Identity & Access Management (IAM), infrastructure monitoring, SIEM, endpoint security, and security tooling. Prefer hands-on technical roles over analyst or reporting-heavy positions.</p>
+      </div>
+      <div class="about-card">
+        <h3>Certifications</h3>
+        <ul class="cert-list">
+          <li>CompTIA Security+</li>
+          <li>SC-300 (Microsoft Identity) — in progress</li>
+          <li>AZ-500 (Azure Security) — planned</li>
+        </ul>
+      </div>
+      <div class="about-card">
+        <h3>Education</h3>
+        <p>Degree with major in PHP Programming. Continuous self-directed learning through homelab projects, vendor documentation, and hands-on lab environments.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header">
+      <p class="section-label">Homelab work</p>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <!-- Nagios -->
+      <div class="project-card">
+        <div class="project-header" onclick="toggleProject(this)">
+          <div class="project-icon" style="background:#E8F7F2;">📡</div>
+          <div class="project-meta">
+            <p class="project-title">Nagios Core Monitoring Setup</p>
+            <p class="project-subtitle">Infrastructure monitoring with NRPE client</p>
+            <div class="project-tags">
+              <span class="tag tag-green">Nagios 4.4.6</span>
+              <span class="tag tag-gray">Ubuntu 22.04</span>
+              <span class="tag tag-gray">NRPE</span>
+              <span class="tag tag-gray">Apache2</span>
+              <span class="tag tag-blue">VirtualBox</span>
+            </div>
+          </div>
+          <div class="project-toggle">▾</div>
+        </div>
+        <div class="project-body">
+          <div class="detail-section">
+            <p class="detail-label">Objective</p>
+            <p style="font-size:13px;color:#6B6960;line-height:1.65;">Set up a complete Nagios monitoring environment with a dedicated server VM monitoring a remote client VM via NRPE. Accessible via web UI with authentication.</p>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">What was done</p>
+            <ul class="detail-list">
+              <li>Configured dual network adapter (NAT + Host-Only) on VirtualBox for VM-to-VM communication</li>
+              <li>Installed and configured Nagios4 with Apache2 on Ubuntu server VM</li>
+              <li>Set up NRPE on client VM to allow remote service monitoring</li>
+              <li>Created all config files manually: <span class="code-inline">nagios.cfg</span>, <span class="code-inline">cgi.cfg</span>, <span class="code-inline">commands.cfg</span>, <span class="code-inline">contacts.cfg</span>, <span class="code-inline">templates.cfg</span></li>
+              <li>Configured basic authentication via <span class="code-inline">htpasswd</span> for web UI access</li>
+              <li>Resolved 20+ configuration and network errors through systematic troubleshooting</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">Services monitored</p>
+            <ul class="detail-list">
+              <li>PING — host reachability check</li>
+              <li>CPU Load — via NRPE check_load</li>
+              <li>Disk Usage — via NRPE check_disk</li>
+              <li>Current Users — via NRPE check_users</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">Troubleshooting highlights</p>
+            <ul class="detail-list">
+              <li>Resolved VirtualBox NAT-only limitation — both VMs unreachable to each other; fixed by adding Host-Only adapter</li>
+              <li>Fixed Apache/Nginx port conflict causing 404 errors on web UI</li>
+              <li>Debugged missing config files caused by conflict between apt-installed and source-installed Nagios</li>
+              <li>Corrected AuthUserFile path mismatch across 4 Apache config entries</li>
+            </ul>
+          </div>
+          <span class="result-pill">Both hosts UP — PING OK, all services monitored successfully</span>
+        </div>
+      </div>
+
+      <!-- Wazuh -->
+      <div class="project-card">
+        <div class="project-header" onclick="toggleProject(this)">
+          <div class="project-icon" style="background:#EFF6FF;">🛡️</div>
+          <div class="project-meta">
+            <p class="project-title">Wazuh SIEM & Security Monitoring</p>
+            <p class="project-subtitle">Log analysis, FIM, and threat detection</p>
+            <div class="project-tags">
+              <span class="tag tag-blue">Wazuh</span>
+              <span class="tag tag-gray">Ubuntu</span>
+              <span class="tag tag-gray">SIEM</span>
+              <span class="tag tag-gray">FIM</span>
+              <span class="tag tag-amber">Elastic Stack</span>
+            </div>
+          </div>
+          <div class="project-toggle">▾</div>
+        </div>
+        <div class="project-body">
+          <div class="detail-section">
+            <p class="detail-label">Objective</p>
+            <p style="font-size:13px;color:#6B6960;line-height:1.65;">Deploy Wazuh as a SIEM solution to monitor security events, file integrity, and log analysis across multiple agents in a homelab environment.</p>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">What was done</p>
+            <ul class="detail-list">
+              <li>Installed Wazuh Manager, Indexer, and Dashboard on dedicated VM</li>
+              <li>Enrolled agents on Linux and Windows VMs</li>
+              <li>Configured File Integrity Monitoring (FIM) rules</li>
+              <li>Tested alert generation with simulated security events</li>
+              <li>Reviewed and analyzed security dashboards and event logs</li>
+            </ul>
+          </div>
+          <span class="result-pill">Wazuh dashboard active — agents enrolled, alerts firing</span>
+        </div>
+      </div>
+
+      <!-- Okta -->
+      <div class="project-card">
+        <div class="project-header" onclick="toggleProject(this)">
+          <div class="project-icon" style="background:#F5F3FF;">🔐</div>
+          <div class="project-meta">
+            <p class="project-title">Okta Developer SSO Setup</p>
+            <p class="project-subtitle">Single Sign-On with SAML and OIDC</p>
+            <div class="project-tags">
+              <span class="tag tag-purple">Okta</span>
+              <span class="tag tag-gray">SAML 2.0</span>
+              <span class="tag tag-gray">OIDC</span>
+              <span class="tag tag-gray">MFA</span>
+              <span class="tag tag-blue">IAM</span>
+            </div>
+          </div>
+          <div class="project-toggle">▾</div>
+        </div>
+        <div class="project-body">
+          <div class="detail-section">
+            <p class="detail-label">Objective</p>
+            <p style="font-size:13px;color:#6B6960;line-height:1.65;">Configure Okta as an Identity Provider using the developer tenant to implement SSO for test applications using SAML 2.0 and OIDC protocols.</p>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">What was done</p>
+            <ul class="detail-list">
+              <li>Set up Okta Developer tenant and configured user directory</li>
+              <li>Integrated SAML 2.0 application with Okta as IdP</li>
+              <li>Configured OIDC app with authorization code flow</li>
+              <li>Set up MFA policies using Okta Verify</li>
+              <li>Tested user provisioning and deprovisioning workflows</li>
+            </ul>
+          </div>
+          <span class="result-pill">SSO working — SAML and OIDC flows verified</span>
+        </div>
+      </div>
+
+      <!-- Entra ID -->
+      <div class="project-card">
+        <div class="project-header" onclick="toggleProject(this)">
+          <div class="project-icon" style="background:#EFF6FF;">☁️</div>
+          <div class="project-meta">
+            <p class="project-title">Microsoft Entra ID (Azure AD) Configuration</p>
+            <p class="project-subtitle">Cloud IAM, Conditional Access & MFA</p>
+            <div class="project-tags">
+              <span class="tag tag-blue">Entra ID</span>
+              <span class="tag tag-gray">Conditional Access</span>
+              <span class="tag tag-gray">MFA</span>
+              <span class="tag tag-gray">RBAC</span>
+              <span class="tag tag-blue">SC-300</span>
+            </div>
+          </div>
+          <div class="project-toggle">▾</div>
+        </div>
+        <div class="project-body">
+          <div class="detail-section">
+            <p class="detail-label">Objective</p>
+            <p style="font-size:13px;color:#6B6960;line-height:1.65;">Hands-on configuration of Microsoft Entra ID (formerly Azure AD) focusing on identity governance, Conditional Access policies, and role-based access control.</p>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">What was done</p>
+            <ul class="detail-list">
+              <li>Created and managed users, groups, and service principals</li>
+              <li>Configured Conditional Access policies for risk-based authentication</li>
+              <li>Set up MFA with Microsoft Authenticator</li>
+              <li>Assigned and reviewed RBAC roles</li>
+              <li>Configured Privileged Identity Management (PIM) for just-in-time access</li>
+            </ul>
+          </div>
+          <span class="result-pill">Conditional Access policies deployed and tested</span>
+        </div>
+      </div>
+
+      <!-- Docker & Laravel -->
+      <div class="project-card">
+        <div class="project-header" onclick="toggleProject(this)">
+          <div class="project-icon" style="background:#FFFBEB;">🐳</div>
+          <div class="project-meta">
+            <p class="project-title">Docker & Laravel Dev Environment</p>
+            <p class="project-subtitle">Containerised application deployment</p>
+            <div class="project-tags">
+              <span class="tag tag-amber">Docker</span>
+              <span class="tag tag-gray">Laravel</span>
+              <span class="tag tag-gray">PHP</span>
+              <span class="tag tag-gray">MySQL</span>
+              <span class="tag tag-gray">Nginx</span>
+            </div>
+          </div>
+          <div class="project-toggle">▾</div>
+        </div>
+        <div class="project-body">
+          <div class="detail-section">
+            <p class="detail-label">Objective</p>
+            <p style="font-size:13px;color:#6B6960;line-height:1.65;">Deploy a containerised Laravel application using Docker Compose to understand container networking, volume management, and service orchestration.</p>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">What was done</p>
+            <ul class="detail-list">
+              <li>Created Docker Compose setup with PHP-FPM, Nginx, and MySQL containers</li>
+              <li>Configured container networking and volume persistence</li>
+              <li>Deployed Laravel application with environment variables</li>
+              <li>Managed container lifecycle and logs</li>
+            </ul>
+          </div>
+          <span class="result-pill">Laravel app running in Docker containers</span>
+        </div>
+      </div>
+
+      <!-- WordPress & Moodle -->
+      <div class="project-card">
+        <div class="project-header" onclick="toggleProject(this)">
+          <div class="project-icon" style="background:#F4F3F0;">🌐</div>
+          <div class="project-meta">
+            <p class="project-title">WordPress & Moodle Server Administration</p>
+            <p class="project-subtitle">Web application hosting and management</p>
+            <div class="project-tags">
+              <span class="tag tag-gray">WordPress</span>
+              <span class="tag tag-gray">Moodle</span>
+              <span class="tag tag-gray">Apache2</span>
+              <span class="tag tag-gray">MySQL</span>
+              <span class="tag tag-gray">Linux</span>
+            </div>
+          </div>
+          <div class="project-toggle">▾</div>
+        </div>
+        <div class="project-body">
+          <div class="detail-section">
+            <p class="detail-label">Objective</p>
+            <p style="font-size:13px;color:#6B6960;line-height:1.65;">Self-host WordPress and Moodle on Linux VMs to practice web server administration, database management, and application security hardening.</p>
+          </div>
+          <div class="detail-section">
+            <p class="detail-label">What was done</p>
+            <ul class="detail-list">
+              <li>Installed and configured LAMP stack on Ubuntu</li>
+              <li>Deployed WordPress and Moodle with separate virtual hosts</li>
+              <li>Managed database users and permissions in MySQL</li>
+              <li>Applied basic security hardening — file permissions, disable directory listing</li>
+            </ul>
+          </div>
+          <span class="result-pill">Both platforms running with separate vhosts</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOMELAB -->
+  <section id="homelab">
+    <div class="section-header">
+      <p class="section-label">Setup</p>
+      <h2 class="section-title">Homelab environment</h2>
+    </div>
+    <div class="homelab-grid">
+      <div class="homelab-item">
+        <p class="homelab-item-name">VirtualBox</p>
+        <p class="homelab-item-desc">Hypervisor for all VMs</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Ubuntu 22.04</p>
+        <p class="homelab-item-desc">Primary server OS</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Windows VM</p>
+        <p class="homelab-item-desc">Client & AD testing</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Parrot Security</p>
+        <p class="homelab-item-desc">Penetration testing</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Nagios Core</p>
+        <p class="homelab-item-desc">Infrastructure monitoring</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Wazuh</p>
+        <p class="homelab-item-desc">SIEM & log analysis</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Wireshark</p>
+        <p class="homelab-item-desc">Network packet analysis</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Docker</p>
+        <p class="homelab-item-desc">Container management</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Laravel</p>
+        <p class="homelab-item-desc">PHP web framework</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">WordPress</p>
+        <p class="homelab-item-desc">CMS administration</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Moodle</p>
+        <p class="homelab-item-desc">LMS deployment</p>
+      </div>
+      <div class="homelab-item">
+        <p class="homelab-item-name">Flutter</p>
+        <p class="homelab-item-desc">Mobile app dev</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header">
+      <p class="section-label">Competencies</p>
+      <h2 class="section-title">Technical skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <p class="skill-group-title">Identity & Access Management</p>
+        <div class="skill-items">
+          <span class="skill-item">Okta</span>
+          <span class="skill-item">Entra ID</span>
+          <span class="skill-item">SAML 2.0</span>
+          <span class="skill-item">OIDC</span>
+          <span class="skill-item">MFA</span>
+          <span class="skill-item">RBAC</span>
+          <span class="skill-item">PIM</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Security & Monitoring</p>
+        <div class="skill-items">
+          <span class="skill-item">Nagios</span>
+          <span class="skill-item">Wazuh</span>
+          <span class="skill-item">Wireshark</span>
+          <span class="skill-item">SIEM</span>
+          <span class="skill-item">FIM</span>
+          <span class="skill-item">Log Analysis</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Operating Systems</p>
+        <div class="skill-items">
+          <span class="skill-item">Ubuntu</span>
+          <span class="skill-item">Linux CLI</span>
+          <span class="skill-item">Windows Server</span>
+          <span class="skill-item">Parrot OS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Infrastructure</p>
+        <div class="skill-items">
+          <span class="skill-item">Docker</span>
+          <span class="skill-item">Apache2</span>
+          <span class="skill-item">Nginx</span>
+          <span class="skill-item">VirtualBox</span>
+          <span class="skill-item">SSH</span>
+          <span class="skill-item">UFW</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Development</p>
+        <div class="skill-items">
+          <span class="skill-item">PHP</span>
+          <span class="skill-item">Laravel</span>
+          <span class="skill-item">Flutter</span>
+          <span class="skill-item">MySQL</span>
+          <span class="skill-item">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Certifications</p>
+        <div class="skill-items">
+          <span class="skill-item">Security+</span>
+          <span class="skill-item">SC-300 (WIP)</span>
+          <span class="skill-item">AZ-500 (planned)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header">
+      <p class="section-label">Get in touch</p>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <p style="font-size:14px;color:#6B6960;margin-bottom:1.5rem;max-width:480px;">Open to hybrid IT Security Engineer roles in Cyberjaya, Putrajaya, Shah Alam, or remote opportunities in Malaysia.</p>
+    <div class="contact-row">
+      <a href="mailto:your@email.com" class="contact-link">✉ Email</a>
+      <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="https://github.com/yourusername" class="contact-link" target="_blank">GitHub</a>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  Built with HTML & CSS · Hosted on GitHub Pages
+</footer>
+
+<script>
+function toggleProject(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.project-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  arrow.textContent = isOpen ? '▾' : '▴';
+}
+</script>
+
+</body>
+</html>
